@@ -10,14 +10,12 @@
 # Experiment(s)
 # Note: don't forget to modify pltpten_time_series.py's "file_list"
 expts=""
-#expts="$expts rrfs_conus_enkf_GDASENKF"
-#expts="$expts rrfs_conus_enkf_GDASENKF_blending_960"
-expts="$expts enkfrrfs_a_na"
-expts="$expts rrfs_a_na"
-expts="$expts enkfrrfs_v0.7.5"
-expts="$expts rrfs_v0.7.5"
-#expts="$expts enkfrrfs_v0.7.1"
-#expts="$expts rrfs_v0.7.1"
+#expts="$expts enkfrrfs_a_na"
+#expts="$expts rrfs_a_na"
+#expts="$expts enkfrrfs_v0.7.9"
+#expts="$expts rrfs_v0.7.9"
+expts="$expts enkfrrfs_v0.8.1"
+expts="$expts rrfs_v0.8.1"
 
 # Datapath
 datapath="/lfs/h2/emc/ptmp/emc.lam/rrfs/" #na/logs/"
@@ -34,10 +32,8 @@ scriptpath="/lfs/h2/emc/da/noscrub/donald.e.lippi/rrfs_mon/ptend/"
 # Run once per day at 00 UTC to get previous 24h
 date1=$(date --date "yesterday" "+%Y%m%d"00)
 date2=$(date --date "yesterday" "+%Y%m%d"23)
-date1=2023112415
-date2=2023112623
-#date1=2023091200
-#date2=2023091223
+#date1=2023112415
+#date2=2023112623
 
 missing_value="-1.0"
 n_cyc=336 #24*14=336 (or two weeks worth of data to show)

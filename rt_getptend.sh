@@ -12,8 +12,10 @@
 expts=""
 expts="$expts enkfrrfs_a_na"
 expts="$expts rrfs_a_na"
-#expts="$expts enkfrrfs_v0.7.5"
-#expts="$expts rrfs_v0.7.5"
+expts="$expts enkfrrfs_v0.7.9"
+expts="$expts rrfs_v0.7.9"
+expts="$expts enkfrrfs_v0.8.1"
+expts="$expts rrfs_v0.8.1"
 
 # Datapath
 datapath="/lfs/h2/emc/ptmp/emc.lam/rrfs/" #na/logs/"

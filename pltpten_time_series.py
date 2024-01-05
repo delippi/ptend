@@ -16,6 +16,8 @@ fig = plt.figure(figsize=(12, 7))
 #file_list = glob.glob('*.txt')
 file_list = [
 "enkfrrfs_a_na_1.000h.txt", "rrfs_a_na_1.000h.txt", "enkfrrfs_a_na_0.020h.txt", "rrfs_a_na_0.020h.txt",
+"enkfrrfs_v0.7.9_1.000h.txt", "rrfs_v0.7.9_1.000h.txt", "enkfrrfs_v0.7.9_0.020h.txt", "rrfs_v0.7.9_0.020h.txt",
+"enkfrrfs_v0.8.1_1.000h.txt", "rrfs_v0.8.1_1.000h.txt", "enkfrrfs_v0.8.1_0.020h.txt", "rrfs_v0.8.1_0.020h.txt",
 #"enkfrrfs_v0.7.5_1.000h.txt", "rrfs_v0.7.5_1.000h.txt", "enkfrrfs_v0.7.5_0.020h.txt", "rrfs_v0.7.5_0.020h.txt",
 #"enkfrrfs_v0.7.1_1.000h.txt", "rrfs_v0.7.1_1.000h.txt", "enkfrrfs_v0.7.1_0.020h.txt", "rrfs_v0.7.1_0.020h.txt",
 ]
@@ -24,7 +26,7 @@ file_list = [
 #colors = ['k', 'tab:blue', 'k', 'tab:blue', 'gray', 'tab:red', 'gray', 'tab:red']
 colors = ['k',       'tab:blue',   'k',       'tab:blue',
           'gray',    'tab:red',    'gray',    'tab:red',
-          'magenta', 'tab:purple', 'magenta', 'tab:purple',
+          'goldenrod', 'tab:green', 'goldenrod', 'tab:green',
          ]
 
 linestyles = ['-', '-', '--', '--',
@@ -89,7 +91,7 @@ plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H'))
 plt.xticks(np.arange(min_timestamp, max_timestamp, datetime.timedelta(hours=24)), rotation=90)
 
 # Add legend
-plt.legend(ncol=2)
+plt.legend(ncol=int(len(file_list)/4))
 
 # Display the plot
 plt.savefig("./ptend_time_series.png",bbox_inches="tight")
