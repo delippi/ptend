@@ -6,19 +6,22 @@
 # script, pltpten_time_series.py is then called to create the ptend plots.
 # Finally, the figure is uploaded to RZDM.
 
+START=$(date +%s)
 ############### USER INPUT ##################
 # Experiment(s)
 # Note: don't forget to modify pltpten_time_series.py's "file_list"
 expts=""
-expts="$expts enkfrrfs_a_na"
-expts="$expts rrfs_a_na"
-expts="$expts enkfrrfs_v0.7.9"
-expts="$expts rrfs_v0.7.9"
-expts="$expts enkfrrfs_v0.8.1"
-expts="$expts rrfs_v0.8.1"
+#expts="$expts enkfrrfs_a_na"
+#expts="$expts rrfs_a_na"
+#expts="$expts enkfrrfs_v0.8.5"
+#expts="$expts rrfs_v0.8.5"
+
+expts="$expts enkfrrfs_v1.0"
+expts="$expts rrfs_v1.0"
 
 # Datapath
 datapath="/lfs/h2/emc/ptmp/emc.lam/rrfs/" #na/logs/"
+datapath="/lfs/h3/emc/lam/noscrub/ecflow/ptmp/emc.lam/ecflow_rrfs/para/output/prod/today"
 
 # Hour in the log file to get ptend
 hours=""
@@ -52,10 +55,11 @@ for expt in $expts; do
       pdy=`echo $date | cut -c 1-8`
       cyc=`echo $date | cut -c 9-10`
       pstend_ensmean=0
-      #logfile=`ls ${datapath}/rrfs.${pdy}/${cyc}/run_fcst_prod*${date}.log`
       version=`echo "$expt" | grep -oP "(?<=rrfs_).*"`
       if [[ $version == "a_na" ]]; then
         logfile=`ls ${datapath}/na/logs/rrfs.${pdy}/${cyc}/run_fcst_prod*${date}.log`
+      elif [[ $version == "v1.0" ]]; then
+        logfile=`ls ${datapath}/${pdy}${cyc}/rrfs_det*forecast*${cyc}.* | grep -v spinup`
       else
         logfile=`ls ${datapath}/$version/logs/rrfs.${pdy}/${cyc}/run_fcst_prod*${date}.log`
       fi
@@ -81,26 +85,35 @@ for expt in $expts; do
       pdy=`echo $date | cut -c 1-8`
       cyc=`echo $date | cut -c 9-10`
       nmem=1
+      count=0
       pstend_ensmean=0
       while [ $nmem -le $nanals ]; do
-        memid=mem`printf %04i $nmem`
-        #logfile=`ls ${datapath}/enkfrrfs.${pdy}/${cyc}/run_fcst_prod*${memid}_${date}.log`
+        memid=mem`printf %03i $nmem`
         version=`echo "$expt" | grep -oP "(?<=enkfrrfs_).*"`
         if [[ $version == "a_na" ]]; then
           logfile=`ls ${datapath}/na/logs/enkfrrfs.${pdy}/${cyc}/run_fcst_prod*${memid}_${date}.log`
+        elif [[ $version == "v1.0" ]]; then
+          logfile=`ls ${datapath}/${pdy}${cyc}/rrfs_enkf*forecast*${memid}_${cyc}.* | grep -v ensinit`
         else
           logfile=`ls ${datapath}/$version/logs/enkfrrfs.${pdy}/${cyc}/run_fcst_prod*${memid}_${date}.log`
         fi
         if [[ -f ${logfile} ]]; then
           pstend=`grep ' mean abs pgr change' ${logfile} | grep "hour     $hour" | awk '{print $10 }'`
-          pstend_ensmean=`python -c "print(${pstend_ensmean}+${pstend}/${nanals}.)"`
-        else
-          pstend=$missing_value
-          pstend_ensmean=$missing_value
+          # one method for calculating the mean -- only works if all 30 members present.
+          #pstend_ensmean=`python -c "print(${pstend_ensmean}+${pstend}/${nanals}.)"`
+          # another (better) method for calculating the mean -- works even when all 30 members aren't present.
+          count=`python -c "print(${count}+1)"`
+          pstend_ensmean=`python -c "print( (${pstend}+${pstend_ensmean}*(${count}-1))/${count}. )"`
+        #else
+        #  pstend=$missing_value
+        #  pstend_ensmean=$missing_value
         fi
         nmem=$[$nmem+1]
       done #nanals
-        echo "$date $pstend_ensmean" >> ./txt/${expt}_${hour}h.txt
+      if [[ "$pstend_ensmean" == "0" ]]; then
+        pstend_ensmean=$missing_value
+      fi
+      echo "$date $pstend_ensmean" >> ./txt/${expt}_${hour}h.txt
       echo "$date $pstend_ensmean"
       date=`incdate $date 1`
     done #dates
@@ -119,8 +132,6 @@ if [[ $machine == "c" || $machine == "d" ]]; then
     export incdate=/u/donald.e.lippi/bin/incdate
 fi
 
-#figdir="/lfs/h2/emc/ptmp/donald.e.lippi/rrfs_a_ptend/figs/"
-#mkdir -p $figdir
 cd $scriptpath
 mkdir -p figs
 $py $scriptpath/pltpten_time_series.py

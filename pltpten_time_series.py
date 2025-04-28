@@ -15,9 +15,12 @@ fig = plt.figure(figsize=(12, 7))
 # Get a list of all text files in the directory
 #file_list = glob.glob('*.txt')
 file_list = [
-"enkfrrfs_a_na_1.000h.txt", "rrfs_a_na_1.000h.txt", "enkfrrfs_a_na_0.020h.txt", "rrfs_a_na_0.020h.txt",
-"enkfrrfs_v0.7.9_1.000h.txt", "rrfs_v0.7.9_1.000h.txt", "enkfrrfs_v0.7.9_0.020h.txt", "rrfs_v0.7.9_0.020h.txt",
-"enkfrrfs_v0.8.1_1.000h.txt", "rrfs_v0.8.1_1.000h.txt", "enkfrrfs_v0.8.1_0.020h.txt", "rrfs_v0.8.1_0.020h.txt",
+"enkfrrfs_v1.0_1.000h.txt", "rrfs_v1.0_1.000h.txt", "enkfrrfs_v1.0_0.020h.txt", "rrfs_v1.0_0.020h.txt",
+#"enkfrrfs_a_na_1.000h.txt", "rrfs_a_na_1.000h.txt", "enkfrrfs_a_na_0.020h.txt", "rrfs_a_na_0.020h.txt",
+#"enkfrrfs_v0.8.3_1.000h.txt", "rrfs_v0.8.3_1.000h.txt", "enkfrrfs_v0.8.3_0.020h.txt", "rrfs_v0.8.3_0.020h.txt",
+#"enkfrrfs_v0.8.5_1.000h.txt", "rrfs_v0.8.5_1.000h.txt", "enkfrrfs_v0.8.5_0.020h.txt", "rrfs_v0.8.5_0.020h.txt",
+#"enkfrrfs_v0.7.9_1.000h.txt", "rrfs_v0.7.9_1.000h.txt", "enkfrrfs_v0.7.9_0.020h.txt", "rrfs_v0.7.9_0.020h.txt",
+#"enkfrrfs_v0.8.1_1.000h.txt", "rrfs_v0.8.1_1.000h.txt", "enkfrrfs_v0.8.1_0.020h.txt", "rrfs_v0.8.1_0.020h.txt",
 #"enkfrrfs_v0.7.5_1.000h.txt", "rrfs_v0.7.5_1.000h.txt", "enkfrrfs_v0.7.5_0.020h.txt", "rrfs_v0.7.5_0.020h.txt",
 #"enkfrrfs_v0.7.1_1.000h.txt", "rrfs_v0.7.1_1.000h.txt", "enkfrrfs_v0.7.1_0.020h.txt", "rrfs_v0.7.1_0.020h.txt",
 ]
