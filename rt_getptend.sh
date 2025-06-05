@@ -133,14 +133,18 @@ if [[ $machine == "c" || $machine == "d" ]]; then
 fi
 
 cd $scriptpath
-mkdir -p figs
+
 $py $scriptpath/pltpten_time_series.py
-cp ptend_time_series.png figs/.
 
 echo "Done making figs. Now upload to rzdm..."
 
+# Make a backup of the text files each time incase of prod switch!
+mkdir -p /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend
+for expt in $expts; do
+  cp ${expt}*txt /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend/.
+done
+
 # upload to rzdm
-cd /lfs/h2/emc/da/noscrub/donald.e.lippi/rrfs_mon/ptend/figs
 ssh-keygen -R emcrzdm.ncep.noaa.gov -f /u/donald.e.lippi/.ssh/known_hosts
 rsync -a * donald.lippi@emcrzdm.ncep.noaa.gov:/home/www/emc/htdocs/mmb/dlippi/rrfs_a/ptend/.
 
