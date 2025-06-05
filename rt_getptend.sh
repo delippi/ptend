@@ -140,8 +140,6 @@ DIFF=$((END - START))
 echo "Time taken to run the code: $DIFF seconds"
 
 # upload to rzdm
-cp ptend_time_series_48h.png figs/. 
-cd /lfs/h2/emc/da/noscrub/donald.e.lippi/rrfs_mon/ptend_48h/figs
 ssh-keygen -R emcrzdm.ncep.noaa.gov -f /u/donald.e.lippi/.ssh/known_hosts
 rsync -a * donald.lippi@emcrzdm.ncep.noaa.gov:/home/www/emc/htdocs/mmb/dlippi/rrfs_a/ptend/.
 
