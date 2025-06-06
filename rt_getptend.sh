@@ -143,6 +143,10 @@ mkdir -p /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend
 for expt in $expts; do
   cp ${expt}*txt /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend/.
 done
+mkdir -p /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend/txt
+for expt in $expts; do
+  cp ${expt}*txt /dfs/write/emc/da/donald.e.lippi/rrfs_mon_text/ptend/txt/.
+done
 
 # upload to rzdm
 ssh-keygen -R emcrzdm.ncep.noaa.gov -f /u/donald.e.lippi/.ssh/known_hosts
