@@ -22,6 +22,7 @@ expts="$expts rrfs_v1.0"
 # Datapath
 datapath="/lfs/h2/emc/ptmp/emc.lam/rrfs/" #na/logs/"
 datapath="/lfs/h3/emc/lam/noscrub/ecflow/ptmp/emc.lam/ecflow_rrfs/para/output/prod/today"
+datapath="/lfs/h1/ops/para/output/" # Dec 2025
 
 # Hour in the log file to get ptend
 hours=""
@@ -59,7 +60,7 @@ for expt in $expts; do
       if [[ $version == "a_na" ]]; then
         logfile=`ls ${datapath}/na/logs/rrfs.${pdy}/${cyc}/run_fcst_prod*${date}.log`
       elif [[ $version == "v1.0" ]]; then
-        logfile=`ls ${datapath}/${pdy}${cyc}/rrfs_det*forecast*${cyc}.* | grep -v spinup | head -n 1`
+        logfile=`ls ${datapath}/${pdy}/rrfs_det*forecast*${cyc}.* | grep -v spinup | head -n 1` # Dec 2025
       else
         logfile=`ls ${datapath}/$version/logs/rrfs.${pdy}/${cyc}/run_fcst_prod*${date}.log`
       fi
@@ -93,7 +94,7 @@ for expt in $expts; do
         if [[ $version == "a_na" ]]; then
           logfile=`ls ${datapath}/na/logs/enkfrrfs.${pdy}/${cyc}/run_fcst_prod*${memid}_${date}.log`
         elif [[ $version == "v1.0" ]]; then
-          logfile=`ls ${datapath}/${pdy}${cyc}/rrfs_enkf*forecast*${memid}_${cyc}.* | grep -v ensinit | head -n 1`
+          logfile=`ls ${datapath}/${pdy}/rrfs_enkf*forecast*${memid}_${cyc}.* | grep -v ensinit | head -n 1` # Dec 2025
         else
           logfile=`ls ${datapath}/$version/logs/enkfrrfs.${pdy}/${cyc}/run_fcst_prod*${memid}_${date}.log`
         fi
@@ -104,9 +105,6 @@ for expt in $expts; do
           # another (better) method for calculating the mean -- works even when all 30 members aren't present.
           count=`python -c "print(${count}+1)"`
           pstend_ensmean=`python -c "print( (${pstend}+${pstend_ensmean}*(${count}-1))/${count}. )"`
-        #else
-        #  pstend=$missing_value
-        #  pstend_ensmean=$missing_value
         fi
         nmem=$[$nmem+1]
       done #nanals
@@ -150,6 +148,6 @@ done
 
 # upload to rzdm
 ssh-keygen -R emcrzdm.ncep.noaa.gov -f /u/donald.e.lippi/.ssh/known_hosts
-rsync -a * donald.lippi@emcrzdm.ncep.noaa.gov:/home/www/emc/htdocs/mmb/dlippi/rrfs_a/ptend/.
+rsync -a ptend_time_series.png donald.lippi@emcrzdm.ncep.noaa.gov:/home/www/emc/htdocs/mmb/dlippi/rrfs_a/ptend/.
 
 echo "Done uploading."
